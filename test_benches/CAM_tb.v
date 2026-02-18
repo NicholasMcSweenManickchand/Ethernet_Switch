@@ -35,7 +35,7 @@ module CAM_tb;
 
         for( i = 0; i < 150; i = i + 1) begin
             @(posedge clk) begin
-                MAC_destination = (2*i);
+                MAC_destination = i;
                 #10;
                 $display("MAC_destination: %h, destination_port: %b\n", MAC_destination, destination_port);
             end

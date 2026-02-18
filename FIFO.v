@@ -28,5 +28,6 @@ always @(posedge clk) begin
     end
 end
 
+// TO DO: Convert to BRAM (Synchronous Read) when scaling to 64-bit width/ 10G.
 assign tx_data = tx_data_storage[reader_count[10:0]]; // don't have to wait or be as careful when reading so can instantly output
 endmodule
