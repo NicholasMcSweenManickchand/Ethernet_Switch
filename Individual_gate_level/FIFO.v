@@ -4,7 +4,7 @@ module FIFO(
     input wire [7:0] rx_data,
     output wire [7:0] tx_data
 );
-reg [7:0] tx_data_storage [2047:0]; //RAM (max IEEE standard packet is 1500 bytes so we should be safe with the closest 2x multiple)
+reg [8:0] tx_data_storage [2047:0]; //RAM (max IEEE standard packet is 1500 bytes so we should be safe with the closest 2x multiple)
 reg [11:0] writer_count; // exta lap counter bit [11]
 reg [11:0] reader_count; 
 wire full, empty; // potentially add an "almost_full" if needed to warn other modules due to latency
@@ -18,9 +18,13 @@ always @(posedge clk) begin
         reader_count <= 12'h0;
     end
     else begin
+        if (!rx_valid_bytes) begin
+            writer_count <= writer_count + 1;
+            tx_data_storage[writer_count[10:0]] <= {1'b1, rx_data};
+        end
         if (rx_valid_bytes && !full) begin
             writer_count <= writer_count + 1;
-            tx_data_storage[writer_count[10:0]] <= rx_data; // stores data in approriate slot/"box"
+            tx_data_storage[writer_count[10:0]] <= {1'b0, rx_data}; // stores data in approriate slot/"box"
         end
         if (allow_output && !empty) begin
             reader_count <= reader_count + 1; 
