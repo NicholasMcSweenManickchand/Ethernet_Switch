@@ -30,12 +30,13 @@ always @(*) begin //no multicast support yet
             end
             else begin
                 case (valid_input) // currently can't handle if we stay on it for more than 1 data push
-                    4'b0000: next_state = IDLE; // notice how the current state isn't an option if control turns off
+                    4'b0000: next_state = IDLE;
+                    4'b0001: next_state = A;
                     4'b0010: next_state = B;
                     4'b0100: next_state = C;
                     4'b1000: next_state = D;
                     default: next_state = B; // priority to next most important if more than 1 asking
-                endcase
+                endcase  //**** logic needs to be changed here bc if c and D are sking it will still go to B
             end
         end
         B: begin
@@ -45,7 +46,8 @@ always @(*) begin //no multicast support yet
             else begin
                 case (valid_input)
                     4'b0000: next_state = IDLE;
-                    4'b0001: next_state = A;
+                    4'b0001: next_state = A; // just gives 0 since when control is down it pumps 0 into the input
+                    4'b0010: next_state = B;
                     4'b0100: next_state = C;
                     4'b1000: next_state = D;
                     default: next_state = C; 
@@ -60,6 +62,7 @@ always @(*) begin //no multicast support yet
                 case (valid_input)
                     4'b0000: next_state = IDLE;
                     4'b0001: next_state = A;
+                    4'b0010: next_state = B;
                     4'b0100: next_state = C;
                     4'b1000: next_state = D;
                     default: next_state = D; 
@@ -76,6 +79,7 @@ always @(*) begin //no multicast support yet
                     4'b0001: next_state = A;
                     4'b0010: next_state = B;
                     4'b0100: next_state = C;
+                    4'b1000: next_state = D;
                     default: next_state = A; // loops back around priority list
                 endcase
             end

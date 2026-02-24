@@ -22,6 +22,7 @@ module Arbiter_tb;
     integer i, j;
 
     initial begin
+        clk = 0;
         reset = 1;
         valid_input = 0;
         control_signal = 0;
@@ -43,7 +44,7 @@ module Arbiter_tb;
             for (j = 0; j < 16; j = j + 1) begin
                 control_signal = j;
                 #10;
-                $display("valid_input: %b, control_signal: %b, tx_data: %b, rx_data: %h", valid_input, control_signal, tx_data, rx_data);
+                $display("valid_input: %b, control_signal: %b, tx_data: %h, rx_data: %h", valid_input, control_signal, tx_data, rx_data);
             end
             #10;
             $display("END OF j LOOP!!!");
