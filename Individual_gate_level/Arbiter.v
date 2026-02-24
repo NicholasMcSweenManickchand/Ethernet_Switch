@@ -1,9 +1,9 @@
 module Arbiter( // 1 arbiter per gate so it only handles the message for it
     input [3:0] valid_input, // 0 is for A and 3 is for D 
     input [3:0] control_signal,
-    input [7:0] rx_data [3:0], // all data paths
+    input [31:0] rx_data, //[7:0] rx_data [3:0], this is not allowed in verilog only system verilog // all data paths
     input reset, clk,
-    output [7:0] tx_data // outputs to the gate where the arbiter is places, (essentially making this complex MUX)
+    output reg [7:0] tx_data // outputs to the gate where the arbiter is places, (essentially making this complex MUX)
     // at 4 bits the compiler will know its not BRAM and use register so simply short-handing
 );
 
@@ -79,6 +79,7 @@ always @(*) begin //no multicast support yet
                     default: next_state = A; // loops back around priority list
                 endcase
             end
+        end
         default: next_state = IDLE;
     endcase
 
@@ -86,10 +87,10 @@ end
 
 always @(*) begin
     case (state)
-            A: tx_data = rx_data[0]; //having them like this allows potentially for future multi-cast since multiple output streams?
-            B: tx_data = rx_data[1];
-            C: tx_data = rx_data[2];
-            D: tx_data = rx_data[3];
+            A: tx_data = rx_data[7:0]; //having them like this allows potentially for future multi-cast since multiple output streams?
+            B: tx_data = rx_data[15:8];
+            C: tx_data = rx_data[23:16];
+            D: tx_data = rx_data[31:24];
             default: begin // basically IDLE
                 tx_data = 8'h0;
             end
@@ -104,7 +105,7 @@ always @(posedge clk) begin
         state <= next_state;
     end
 end
-
+endmodule
 
 
 
