@@ -1,6 +1,5 @@
 module Arbiter( // 1 arbiter per gate so it only handles the message for it
-    input [3:0] valid_input, // 0 is for A and 3 is for D 
-    input [3:0] control_signal,
+    input [3:0] valid_input, // 0 is for A and 3 is for D // valid input will swallow control_signal and be the only gate keeper
     input [31:0] rx_data, //[7:0] rx_data [3:0], this is not allowed in verilog only system verilog // all data paths
     input reset, clk,
     output reg [7:0] tx_data // outputs to the gate where the arbiter is places, (essentially making this complex MUX)
@@ -15,74 +14,90 @@ reg [2:0] state, next_state;
 always @(*) begin //no multicast support yet
     case (state)
         IDLE: begin
-            case (valid_input)
-                4'b0000: next_state = IDLE;
-                4'b0001: next_state = A;
-                4'b0010: next_state = B;
-                4'b0100: next_state = C;
-                4'b1000: next_state = D;
-                default: next_state = A; // priority to A
-            endcase
+                if (valid_input[0])begin
+                    next_state = A;
+                end
+                else if (valid_input[1]) begin
+                    next_state = B;
+                end
+                else if (valid_input[2]) begin
+                    next_state = C;
+                end
+                else if (valid_input[3]) begin
+                    next_state = D;
+                end
+                else begin
+                    next_state = IDLE;
+                end
         end 
         A: begin
-            if (control_signal[0]) begin
-                next_state = A;
-            end
-            else begin
-                case (valid_input) // currently can't handle if we stay on it for more than 1 data push
-                    4'b0000: next_state = IDLE;
-                    4'b0001: next_state = A;
-                    4'b0010: next_state = B;
-                    4'b0100: next_state = C;
-                    4'b1000: next_state = D;
-                    default: next_state = B; // priority to next most important if more than 1 asking
-                endcase  //**** logic needs to be changed here bc if c and D are sking it will still go to B
+                if (valid_input[0])begin
+                    next_state = A;
+                end
+                else if (valid_input[1]) begin
+                    next_state = B;
+                end
+                else if (valid_input[2]) begin
+                    next_state = C;
+                end
+                else if (valid_input[3]) begin
+                    next_state = D;
+                end
+                else begin
+                    next_state = IDLE;
+                end
             end
         end
         B: begin
-            if (control_signal[1]) begin
-                next_state = B;
-            end
-            else begin
-                case (valid_input)
-                    4'b0000: next_state = IDLE;
-                    4'b0001: next_state = A; // just gives 0 since when control is down it pumps 0 into the input
-                    4'b0010: next_state = B;
-                    4'b0100: next_state = C;
-                    4'b1000: next_state = D;
-                    default: next_state = C; 
-                endcase
-            end
+                if (valid_input[1])begin
+                    next_state = B;
+                end
+                else if (valid_input[2]) begin
+                    next_state = C;
+                end
+                else if (valid_input[3]) begin
+                    next_state = D;
+                end
+                else if (valid_input[0]) begin
+                    next_state = A;
+                end
+                else begin
+                    next_state = IDLE;
+                end
         end
         C: begin
-            if (control_signal[2]) begin
-                next_state = C;
-            end
-            else begin
-                case (valid_input)
-                    4'b0000: next_state = IDLE;
-                    4'b0001: next_state = A;
-                    4'b0010: next_state = B;
-                    4'b0100: next_state = C;
-                    4'b1000: next_state = D;
-                    default: next_state = D; 
-                endcase
-            end
+                if (valid_input[2])begin
+                    next_state = C;
+                end
+                else if (valid_input[3]) begin
+                    next_state = D;
+                end
+                else if (valid_input[0]) begin
+                    next_state = A;
+                end
+                else if (valid_input[1]) begin
+                    next_state = B;
+                end
+                else begin
+                    next_state = IDLE;
+                end
         end
         D: begin
-            if (control_signal[3]) begin
-                next_state = D;
-            end
-            else begin
-                case (valid_input)
-                    4'b0000: next_state = IDLE;
-                    4'b0001: next_state = A;
-                    4'b0010: next_state = B;
-                    4'b0100: next_state = C;
-                    4'b1000: next_state = D;
-                    default: next_state = A; // loops back around priority list
-                endcase
-            end
+                if (valid_input[3])begin
+                    next_state = D;
+                end
+                else if (valid_input[0]) begin
+                    next_state = A;
+                end
+                else if (valid_input[1]) begin
+                    next_state = B;
+                end
+                else if (valid_input[2]) begin
+                    next_state = C;
+                end
+                else begin
+                    next_state = IDLE;
+                end
         end
         default: next_state = IDLE;
     endcase
