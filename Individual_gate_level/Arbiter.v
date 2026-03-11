@@ -46,7 +46,6 @@ always @(*) begin //no multicast support yet
                 else begin
                     next_state = IDLE;
                 end
-            end
         end
         B: begin
                 if (valid_input[1])begin
