@@ -14,9 +14,9 @@ module TX_MAC(
 
     localparam IDLE = 0, Preamble_push = 1, SFD_push = 2, data_push = 3, FCS_push = 4;
     reg [2:0] state, next_state;
-    reg [3:0] counter_IPG; // 96ns gap at 125MHz clk spped is 12 clk cycles since 1 clk cycle is 8ns
+    reg [3:0] counter_IPG; // 96ns gap at 125MHz clk spped is 12 clk cycles since 1 clk cycle is 8ns  (this is the minimum gap between packets)
     reg [2:0] counter_preamble; // count the seven bytes
-    reg [1:0] counter_FCS; // count the FCS bytes (4)
+    reg [1:0] counter_FCS; // count the FCS bytes (4) 
 
     always @(*) begin
         
@@ -49,22 +49,20 @@ module TX_MAC(
         end
         else begin
             state <= next_state;
-            case (state) begin
+            case (state)
                 IDLE:  begin        
                 if (counter_IPG != 11) // allows to hold until rx_control_signal goes high
                     counter_IPG <= counter_IPG + 1;
                 end
                 Preamble_push: counter_preamble <= counter_preamble + 1;
                 FCS_push:      counter_FCS <= counter_FCS + 1;
-                default: begin // when not in any of these 2 states we need to reset the counters to 0 for the next packet;
+                default: begin // when not in any of these 2 states (or IDLE) we need to reset the counters to 0 for the next packet;
                     counter_IPG <= 4'h0;
                     counter_preamble <= 3'h0;
                     counter_FCS <= 2'h0;
                 end
                 // all others are irrelevant here and since in clk'ed block, no latch is infered
-            end 
+            endcase
         end
     end
-
-
-
+endmodule
