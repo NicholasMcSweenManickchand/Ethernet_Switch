@@ -41,7 +41,7 @@ module CAM_tb;
             end
         end
         #20;
-        $stop;
+        $finish;
     end
 endmodule
     

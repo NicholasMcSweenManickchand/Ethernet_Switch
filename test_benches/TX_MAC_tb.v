@@ -44,7 +44,7 @@ module TX_MAC_tv;
             end
         end
         end
-    $stop;
+    $finish;
     end
 endmodule
         

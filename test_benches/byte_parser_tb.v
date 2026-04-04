@@ -67,7 +67,7 @@ initial begin
         $display("MAC_des_complete: %h, MAC_sc_complete: %h, MAC_tp_complete: %h, true_data: %h\n", MAC_des_complete, MAC_sc_complete, MAC_tp_complete, true_data);
         #10;
     end
-    $stop;
+    $finish;
 end
 endmodule
 

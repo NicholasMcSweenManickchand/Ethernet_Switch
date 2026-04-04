@@ -77,7 +77,7 @@ initial begin
         $display("in: %h (decimal: %d), Out: %d, out_valid: %d", i, i, out_data, out_valid);
         #10;
     end
-    $stop;
+    $finish;
 end
 
 endmodule

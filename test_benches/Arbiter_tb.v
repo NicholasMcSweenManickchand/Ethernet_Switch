@@ -48,6 +48,6 @@ module Arbiter_tb;
                 $display("valid_input: %b, tx_data: %h", valid_input, tx_data);
             end
         end
-        $stop;
+        $finish;
     end
 endmodule

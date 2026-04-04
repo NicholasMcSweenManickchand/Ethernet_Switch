@@ -54,7 +54,7 @@ module FIFO_tb;
             $display("IN: %d, OUT: %d, out_valid: %d", rx_data, tx_data, allow_output);
         end
         #10;
-        $stop;
+        $finish;
     end
 endmodule
 
