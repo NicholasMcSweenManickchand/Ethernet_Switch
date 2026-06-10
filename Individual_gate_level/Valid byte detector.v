@@ -23,7 +23,7 @@ always @(posedge clk)begin
             start_valid <= ON;
         end
         if (start_valid && rx_control_signal)begin 
-        /* this means that once we get the green light byte,
+        /* this means that once we get the green light byte (0xD5),
          the next clock cycle we tell the module to turn the input into an output, since this is now a valid data-filled input
          and it also tells the next modules that the input is indeed valid and data-filled instead of garbage because of the tx_valid.
         */

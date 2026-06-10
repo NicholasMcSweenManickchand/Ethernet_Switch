@@ -14,7 +14,7 @@ module TX_MAC(
 
     localparam IDLE = 0, Preamble_push = 1, SFD_push = 2, data_push = 3, FCS_push = 4;
     reg [2:0] state, next_state;
-    reg [3:0] counter_IPG; // 96ns gap at 125MHz clk spped is 12 clk cycles since 1 clk cycle is 8ns  (this is the minimum gap between packets)
+    reg [3:0] counter_IPG; // 96ns gap at 125MHz clk speed is 12 clk cycles since 1 clk cycle is 8ns  (this is the minimum gap between packets)
     reg [2:0] counter_preamble; // count the seven bytes
     reg [1:0] counter_FCS; // count the FCS bytes (4) 
 
