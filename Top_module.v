@@ -26,8 +26,8 @@ module Top(
         rx_data(rx_data),
         MAC_destination_address9(MAC_destination_address), 
         MAC_source_address(MAC_source_address),
-        MAC_type,
-        tx_true_data,
+        MAC_type(), // Not used in this case just transfered / carried
+        tx_true_data(),
         reg MAC_des_complete, 
         MAC_sc_complete, 
         MAC_tp_complete, 

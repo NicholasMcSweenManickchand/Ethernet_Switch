@@ -7,7 +7,7 @@ module CAM(
 localparam Port_A = 4'b0001, Port_B = 4'b0010, Port_C = 4'b0100, Port_D = 4'b1000;  // one hot to allow multicasting later on
 localparam broadcast = 4'b1111;
 reg [3:0] des_port;
-reg [3:0] source_port;
+reg [3:0] source_port; // useless here
 
 always @(*) begin
     if (valid_destination) begin // potentially come back and lower the clock cycle added by valid_address only turning on when MAC is ready and not 1 clk before
