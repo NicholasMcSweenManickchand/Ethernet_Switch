@@ -9,7 +9,8 @@ module FIFO_tb;
     FIFO u1(
         .rx_valid_bytes(rx_valid_bytes), 
         .control_signal(control_signal), 
-        .clk(clk), 
+        .Write_clk(clk), 
+        .Read_clk(clk), //assume Read and Write CLk are the same for this
         .reset(reset),
         .allow_output(allow_output),
         .rx_data(rx_data),
@@ -22,7 +23,8 @@ module FIFO_tb;
     initial begin
 
         reset = 1;
-        clk = 0;
+        Write_clk = 0;
+        Read_clk = 0;
         control_signal = 0;
         rx_valid_bytes = 0;
         allow_output = 0;
