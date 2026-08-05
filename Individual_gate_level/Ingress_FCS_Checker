@@ -69,7 +69,7 @@ module Ingress_FCS_Checker(
             if (eof) begin
                 // The crcOut wire represents the calculated state AFTER this final byte.
                 // We invert it (~crcOut) to match the IEEE 802.3 standard output.
-                if (~crcOut == 32'hC704DD7B) begin //or (crcOut == h2144DF1C)
+                if (~crcOut == 32'h2144DF1C) begin //or (crcOut == h2144DF1C)
                     poison <= 1'b0; // Magic residue matches! Packet is clean.
                 end
                 else begin
