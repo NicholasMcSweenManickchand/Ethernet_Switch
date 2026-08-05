@@ -1,0 +1,138 @@
+$date
+	Wed Aug 05 15:51:31 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module CAM_tb $end
+$var wire 4 ! dest_port_1 [3:0] $end
+$var wire 4 " dest_port_0 [3:0] $end
+$var reg 1 # clk $end
+$var reg 48 $ read_mac_0 [47:0] $end
+$var reg 48 % read_mac_1 [47:0] $end
+$var reg 1 & reset $end
+$var reg 1 ' valid_dest_0 $end
+$var reg 1 ( valid_dest_1 $end
+$var reg 1 ) we $end
+$var reg 48 * write_mac [47:0] $end
+$var reg 4 + write_port [3:0] $end
+$scope module u1 $end
+$var wire 1 # clk $end
+$var wire 48 , read_mac_0 [47:0] $end
+$var wire 48 - read_mac_1 [47:0] $end
+$var wire 48 . read_mac_2 [47:0] $end
+$var wire 48 / read_mac_3 [47:0] $end
+$var wire 1 & reset $end
+$var wire 1 ' valid_dest_0 $end
+$var wire 1 ( valid_dest_1 $end
+$var wire 1 0 valid_dest_2 $end
+$var wire 1 1 valid_dest_3 $end
+$var wire 1 ) we $end
+$var wire 48 2 write_mac [47:0] $end
+$var wire 4 3 write_port [3:0] $end
+$var reg 4 4 dest_port_0 [3:0] $end
+$var reg 4 5 dest_port_1 [3:0] $end
+$var reg 4 6 dest_port_2 [3:0] $end
+$var reg 4 7 dest_port_3 [3:0] $end
+$var reg 16 8 entry_valid [15:0] $end
+$var reg 4 9 write_ptr [3:0] $end
+$var integer 32 : i [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+bx :
+bx 9
+bx 8
+b0 7
+b0 6
+b0 5
+b0 4
+b0 3
+b0 2
+01
+00
+b0 /
+b0 .
+b0 -
+b0 ,
+b0 +
+b0 *
+0)
+0(
+0'
+1&
+b0 %
+b0 $
+0#
+b0 "
+b0 !
+$end
+#5000
+b0 7
+b0 6
+b0 !
+b0 5
+b0 "
+b0 4
+b0 9
+b0 8
+b10000 :
+1#
+#10000
+0#
+0&
+#15000
+1#
+#20000
+b10 +
+b10 3
+b101010101011101111001100110111011110111011111111 *
+b101010101011101111001100110111011110111011111111 2
+1)
+0#
+#25000
+b0 7
+b0 6
+b0 !
+b0 5
+b0 "
+b0 4
+b1 9
+b1 8
+1#
+#30000
+0)
+0#
+#35000
+1#
+#40000
+b1111 !
+b1111 5
+b10000 :
+b10 "
+b10 4
+0#
+b100010010001000110011010001000101010101100110 %
+b100010010001000110011010001000101010101100110 -
+1(
+b101010101011101111001100110111011110111011111111 $
+b101010101011101111001100110111011110111011111111 ,
+1'
+#45000
+1#
+#50000
+0#
+#55000
+1#
+#60000
+0#
+#65000
+1#

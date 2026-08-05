@@ -40,16 +40,27 @@ module CAM_Write_Arbiter_tb;
             we_1 = 1;
             we_2 = 1;
         end
+        
+        // Cycle 1: The Arbiter latches the requests internally. Output is still 0.
         @(negedge clk) begin
             we_1 = 0;
             we_2 = 0;
-            $display("Arbitration Cycle 1: Writing MAC %h to port %d (we: %b)", cam_write_mac, cam_write_port, cam_we);
+            $display("Arbitration Cycle 1 (Latch Stage)   : Writing MAC %h to port %d (we: %b)", cam_write_mac, cam_write_port, cam_we);
         end
+        
+        // Cycle 2: The Arbiter services Port 1.
         @(negedge clk) begin
-            $display("Arbitration Cycle 2: Writing MAC %h to port %d (we: %b)", cam_write_mac, cam_write_port, cam_we);
+            $display("Arbitration Cycle 2 (Service Port 1): Writing MAC %h to port %d (we: %b)", cam_write_mac, cam_write_port, cam_we);
         end
+        
+        // Cycle 3: The Arbiter services Port 2 from its internal buffer.
         @(negedge clk) begin
-            $display("Arbitration Cycle 3: we: %b (Expected 0)", cam_we);
+            $display("Arbitration Cycle 3 (Service Port 2): Writing MAC %h to port %d (we: %b)", cam_write_mac, cam_write_port, cam_we);
+        end
+        
+        // Cycle 4: Both flags are cleared. The Arbiter drops 'we' to protect memory.
+        @(negedge clk) begin
+            $display("Arbitration Cycle 4 (Idle/Clear)    : we: %b (Expected 0)", cam_we);
         end
 
         $finish;

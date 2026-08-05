@@ -1,0 +1,331 @@
+$date
+	Wed Aug 05 15:47:41 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module TX_MAC_tb $end
+$var wire 1 ! tx_en $end
+$var wire 8 " tx_data [7:0] $end
+$var wire 1 # payload_active $end
+$var reg 32 $ FCS_data [31:0] $end
+$var reg 1 % clk $end
+$var reg 1 & reset $end
+$var reg 8 ' rx_data [7:0] $end
+$var reg 1 ( tx_active $end
+$var integer 32 ) i [31:0] $end
+$scope module u1 $end
+$var wire 32 * FCS_data [31:0] $end
+$var wire 8 + SFD [7:0] $end
+$var wire 1 % clk $end
+$var wire 8 , preamble [7:0] $end
+$var wire 1 & reset $end
+$var wire 8 - rx_data [7:0] $end
+$var wire 1 ( tx_active $end
+$var wire 1 # payload_active $end
+$var parameter 32 . DATA_PUSH $end
+$var parameter 32 / FCS_PUSH $end
+$var parameter 32 0 IDLE $end
+$var parameter 32 1 IPG_WAIT $end
+$var parameter 32 2 PREAMBLE_PUSH $end
+$var parameter 32 3 SFD_PUSH $end
+$var reg 2 4 counter_FCS [1:0] $end
+$var reg 4 5 counter_IPG [3:0] $end
+$var reg 3 6 counter_preamble [2:0] $end
+$var reg 3 7 next_state [2:0] $end
+$var reg 3 8 state [2:0] $end
+$var reg 8 9 tx_data [7:0] $end
+$var reg 1 ! tx_en $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b10 3
+b1 2
+b101 1
+b0 0
+b100 /
+b11 .
+$end
+#0
+$dumpvars
+b0 9
+bx 8
+b0 7
+bx 6
+bx 5
+bx 4
+b11010 -
+b1010101 ,
+b11010101 +
+b10101011110011011110111100010010 *
+bx )
+0(
+b11010 '
+1&
+0%
+b10101011110011011110111100010010 $
+x#
+b0 "
+0!
+$end
+#4000
+b0 4
+b0 6
+b0 5
+0#
+b0 8
+1%
+#8000
+b1 7
+b0 )
+1(
+0%
+0&
+#12000
+1!
+b1010101 "
+b1010101 9
+b1 8
+1%
+#16000
+b1 )
+0%
+#20000
+b1 6
+1%
+#24000
+b10 )
+0%
+#28000
+b10 6
+1%
+#32000
+b11 )
+0%
+#36000
+b11 6
+1%
+#40000
+b100 )
+0%
+#44000
+b100 6
+1%
+#48000
+b101 )
+0%
+#52000
+b101 6
+1%
+#56000
+b110 )
+0%
+#60000
+b10 7
+b110 6
+1%
+#64000
+b111 )
+0%
+#68000
+1!
+b11010101 "
+b11010101 9
+b11 7
+b111 6
+b10 8
+1%
+#72000
+b1000 )
+0%
+#76000
+1!
+b11010 "
+b11010 9
+b0 6
+1#
+b11 8
+1%
+#80000
+b1001 )
+0%
+#84000
+1%
+#88000
+b1010 )
+0%
+#92000
+1%
+#96000
+b1011 )
+0%
+#100000
+1%
+#104000
+b1100 )
+0%
+#108000
+1%
+#112000
+b1101 )
+0%
+#116000
+1%
+#120000
+b1110 )
+0%
+#124000
+1%
+#128000
+b1111 )
+0%
+#132000
+1%
+#136000
+b100 7
+b0 )
+0(
+0%
+#140000
+1!
+b10101011 "
+b10101011 9
+0#
+b100 8
+1%
+#144000
+b1 )
+0%
+#148000
+1!
+b11001101 "
+b11001101 9
+b1 4
+1%
+#152000
+b10 )
+0%
+#156000
+1!
+b11101111 "
+b11101111 9
+b10 4
+1%
+#160000
+b11 )
+0%
+#164000
+1!
+b10010 "
+b10010 9
+b101 7
+b11 4
+1%
+#168000
+b100 )
+0%
+#172000
+0!
+b0 "
+b0 9
+b0 4
+b101 8
+1%
+#176000
+b101 )
+0%
+#180000
+b1 5
+1%
+#184000
+b110 )
+0%
+#188000
+b10 5
+1%
+#192000
+b111 )
+0%
+#196000
+b11 5
+1%
+#200000
+b1000 )
+0%
+#204000
+b100 5
+1%
+#208000
+b1001 )
+0%
+#212000
+b101 5
+1%
+#216000
+b1010 )
+0%
+#220000
+b110 5
+1%
+#224000
+b1011 )
+0%
+#228000
+b111 5
+1%
+#232000
+b1100 )
+0%
+#236000
+b1000 5
+1%
+#240000
+b1101 )
+0%
+#244000
+b1001 5
+1%
+#248000
+b1110 )
+0%
+#252000
+b1010 5
+1%
+#256000
+b1111 )
+0%
+#260000
+b0 7
+b1011 5
+1%
+#264000
+b10000 )
+0%
+#268000
+b1100 5
+b0 8
+1%
+#272000
+b10001 )
+0%
+#276000
+b0 5
+1%
+#280000
+b10010 )
+0%
+#284000
+1%
+#288000
+b10011 )
+0%
+#292000
+1%
+#296000
+b10100 )
+0%

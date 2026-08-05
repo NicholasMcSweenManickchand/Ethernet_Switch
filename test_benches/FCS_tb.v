@@ -5,7 +5,7 @@ module FCS_tb;
     reg [7:0] data;
     reg clk, reset, valid_data; 
     reg done; 
-    reg poison; // NEW: Poison flag input
+    reg poison; 
     wire [31:0] rx_crc;
 
     reg display;
@@ -16,7 +16,7 @@ module FCS_tb;
         .reset(reset),
         .valid_data(valid_data),
         .done(done),
-        .poison(poison), // Added to instantiation
+        .poison(poison), 
         .rx_crc(rx_crc)
     );
 
@@ -78,6 +78,11 @@ module FCS_tb;
                 data = data + 1;
             end
         end
+        
+        // FREEZE THE ENGINE HERE:
+        // Pull valid_data low instantly before the delays let the clock tick forward
+        valid_data = 0; 
+        
         #1;
         repeat (2) begin
             display = ~display; 
