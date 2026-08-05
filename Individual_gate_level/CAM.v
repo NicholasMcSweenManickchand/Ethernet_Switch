@@ -33,7 +33,7 @@ module CAM(
         if (reset) begin
             entry_valid <= 16'h0;
             write_ptr <= 4'h0;
-            for (i = 0; i < 16; i = i + 1) begin
+            for (i = 0; i < 16; i = i + 1) begin // for loop necessary even if big footprint
                 mac_memory[i] <= 48'h0;
                 port_memory[i] <= 4'h0;
             end
