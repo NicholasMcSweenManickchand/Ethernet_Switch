@@ -1,80 +1,88 @@
 `timescale 1ns/1ps
 
 module byte_parser_tb;
+    reg clk;
+    reg reset;
+    reg [7:0] rx_data;
+    reg rx_valid;
+    reg rx_control_signal;
 
-wire [47:0] MAC_desitnation, MAC_source;
-wire [15:0] MAC_type;
-wire [7:0] data_out;
-wire MAC_des_complete, MAC_sc_complete, MAC_tp_complete, true_data;
-reg clk, reset, control, in_valid;
-reg [7:0] data_in;
+    wire [47:0] MAC_destination_address;
+    wire [47:0] MAC_source_address;
+    wire MAC_des_complete;
+    wire MAC_sc_complete;
+    wire [7:0] tx_true_data;
+    wire true_data_valid;
 
-byte_parser u1(
-    .rx_valid(in_valid), 
-    .rx_control_signal(control), 
-    .reset(reset), 
-    .clk(clk),
-    .rx_data(data_in),   
-    .MAC_destination_address(MAC_desitnation), 
-    .MAC_source_address(MAC_source),
-    .MAC_type(MAC_type),
-    .tx_true_data(data_out),
-    .MAC_des_complete(MAC_des_complete),
-    .MAC_sc_complete(MAC_sc_complete), 
-    .MAC_tp_complete(MAC_tp_complete), 
-    .true_data_valid(true_data)
-);
+    byte_parser uut (
+        .clk(clk), .reset(reset),
+        .rx_data(rx_data), .rx_valid(rx_valid), .rx_control_signal(rx_control_signal),
+        .MAC_destination_address(MAC_destination_address),
+        .MAC_source_address(MAC_source_address),
+        .MAC_des_complete(MAC_des_complete),
+        .MAC_sc_complete(MAC_sc_complete),
+        .tx_true_data(tx_true_data),
+        .true_data_valid(true_data_valid)
+    );
 
-always #5 clk = ~clk;
+    always #4 clk = ~clk;
 
-integer i;
+    integer i;
 
-initial begin
+    initial begin
+        $dumpfile("byte_parser_tb.vcd");
+        $dumpvars(0, byte_parser_tb);
 
-    $dumpfile("byte_parser.vcd");
-    $dumpvars(0, byte_parser_tb);
+        clk = 0; reset = 1;
+        rx_data = 8'h00; rx_valid = 0; rx_control_signal = 0;
 
-    clk = 0;
-    reset = 1;
-    control = 0;
-    in_valid = 0;
+        #20 reset = 0; #10;
 
-    #100;
+        $display("=== STARTING PARSER VBD-TRUST TEST ===");
+        
+        // Link goes active, but VBD hasn't validated data yet
+        @(negedge clk) rx_control_signal = 1; 
 
-    reset = 0;
-    #10;
+        // Simulating the time the VBD spends eating the Preamble and SFD
+        for (i=0; i<8; i=i+1) begin
+            rx_data = 8'h00; rx_valid = 0; @(negedge clk);
+        end
 
-    $display("Starting packet injection:");
-    $display("control & in_valid are off so should yield nothing");
-    #10;
-    for(i = 0; i < 10; i = i + 1) begin // just enough to prove that it gives nothing with nothing on;
-        data_in = i;
-        $display("in: %d, MAC_des_out: %h, MAC_sc_out: %h, MAC_tp_out: %h, true_data_out: %h\n", data_in, MAC_desitnation, MAC_source, MAC_type, data_out);
-        $display("MAC_des_complete: %h, MAC_sc_complete: %h, MAC_tp_complete: %h, true_data: %h\n", MAC_des_complete, MAC_sc_complete, MAC_tp_complete, true_data);
-        #10;
+        // The VBD sees the first byte of the Dest MAC and asserts rx_valid!
+        rx_valid = 1;
+
+        // Dest MAC (00:11:22:33:44:55)
+        rx_data = 8'h00; @(negedge clk);
+        rx_data = 8'h11; @(negedge clk);
+        rx_data = 8'h22; @(negedge clk);
+        rx_data = 8'h33; @(negedge clk);
+        rx_data = 8'h44; @(negedge clk);
+        rx_data = 8'h55; @(negedge clk);
+
+        // Source MAC (AA:BB:CC:DD:EE:FF)
+        rx_data = 8'hAA; @(negedge clk);
+        rx_data = 8'hBB; @(negedge clk);
+        rx_data = 8'hCC; @(negedge clk);
+        rx_data = 8'hDD; @(negedge clk);
+        rx_data = 8'hEE; @(negedge clk);
+        rx_data = 8'hFF; @(negedge clk);
+        
+        // A few payload bytes
+        rx_data = 8'h08; @(negedge clk);
+        rx_data = 8'h00; @(negedge clk);
+        rx_data = 8'h10; @(negedge clk);
+        rx_data = 8'h11; @(negedge clk);
+
+        // End of packet
+        rx_control_signal = 0; rx_valid = 0; rx_data = 8'h00;
+        
+        #20 $display("=== PARSER TEST COMPLETE ===");
+        $finish;
     end
-    reset = 1;
-    #100;
-    reset = 0;
-    #30
 
-    control = 1;
-    in_valid = 1;
-    #10;
-    for(i = 0; i < 256; i = i + 1) begin
-        data_in = i;
-        $display("in: %d, MAC_des_out: %h, MAC_sc_out: %h, MAC_tp_out: %h, true_data_out: %h\n", data_in, MAC_desitnation, MAC_source, MAC_type, data_out);
-        $display("MAC_des_complete: %h, MAC_sc_complete: %h, MAC_tp_complete: %h, true_data: %h\n", MAC_des_complete, MAC_sc_complete, MAC_tp_complete, true_data);
-        #10;
+    always @(posedge clk) begin
+        if (rx_control_signal)
+            $display("[Time %0t] VBD Output: %h (Valid: %b) | Parser Passing: %h (Valid: %b) | Dest Complete: %b", 
+                     $time, rx_data, rx_valid, tx_true_data, true_data_valid, MAC_des_complete);
     end
-    $finish;
-end
 endmodule
-
-
-
-    
-
-
-
-

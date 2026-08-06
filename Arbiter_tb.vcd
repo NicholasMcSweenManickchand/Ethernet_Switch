@@ -1,0 +1,150 @@
+$date
+	Thu Aug 06 14:14:33 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module Arbiter_tb $end
+$var wire 8 ! tx_data [7:0] $end
+$var wire 4 " rx_grant [3:0] $end
+$var wire 1 # active_transmit $end
+$var reg 1 $ clk $end
+$var reg 1 % reset $end
+$var reg 36 & rx_data [35:0] $end
+$var reg 1 ' tx_payload_active $end
+$var reg 4 ( valid_input [3:0] $end
+$scope module uut $end
+$var wire 1 # active_transmit $end
+$var wire 1 $ clk $end
+$var wire 1 % reset $end
+$var wire 36 ) rx_data [35:0] $end
+$var wire 1 ' tx_payload_active $end
+$var wire 4 * valid_input [3:0] $end
+$var wire 9 + port_3 [8:0] $end
+$var wire 9 , port_2 [8:0] $end
+$var wire 9 - port_1 [8:0] $end
+$var wire 9 . port_0 [8:0] $end
+$var reg 1 / current_eof $end
+$var reg 4 0 rx_grant [3:0] $end
+$var reg 2 1 selected_port [1:0] $end
+$var reg 1 2 transmitting $end
+$var reg 8 3 tx_data [7:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b0 3
+x2
+bx 1
+b0 0
+0/
+b0 .
+b0 -
+b0 ,
+b0 +
+b0 *
+b0 )
+b0 (
+0'
+b0 &
+1%
+0$
+x#
+b0 "
+b0 !
+$end
+#4000
+0#
+02
+b0 1
+1$
+#8000
+0$
+#12000
+1$
+#16000
+0$
+#20000
+1$
+0%
+#24000
+0$
+#28000
+1$
+#32000
+b10101011 !
+b10101011 3
+b10101011 .
+1'
+b10101011 &
+b10101011 )
+b1 (
+b1 *
+0$
+#36000
+b1 "
+b1 0
+b10101011 !
+b10101011 3
+1#
+12
+1$
+#40000
+b1 "
+b1 0
+b11001101 !
+b11001101 3
+b11001101 .
+b11001101 &
+b11001101 )
+0$
+#44000
+1$
+#48000
+0#
+b0 "
+b0 0
+b11101111 !
+b11101111 3
+1/
+b111101111 .
+b111101111 &
+b111101111 )
+0$
+#52000
+b11101111 !
+b11101111 3
+02
+1$
+#56000
+b0 !
+b0 3
+0/
+b0 .
+b0 (
+b0 *
+b0 &
+b0 )
+0$
+#60000
+1$
+#64000
+0$
+#68000
+1$
+#72000
+0$
+#76000
+1$
+#80000
+0$
+#84000
+1$
+#86000
